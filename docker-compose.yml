@@ -1,0 +1,36 @@
+services:
+  proxmox-mcp:
+    image: proxmoxmcp-plus-proxmox-mcp:latest
+    container_name: proxmox-mcp
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./proxmox-config:/app/proxmox-config:ro
+    environment:
+      - PROXMOX_MCP_CONFIG=/app/proxmox-config/config.yaml
+    command: python -m proxmox_mcp.server --http --port 8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-s", "--max-time", "3", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  proxmox-mcp-canary:
+    image: proxmoxmcp-plus-proxmox-mcp:latest
+    container_name: proxmox-mcp-canary
+    ports:
+      - "8093:8080"
+    volumes:
+      - ./proxmox-config:/app/proxmox-config:ro
+    environment:
+      - PROXMOX_MCP_CONFIG=/app/proxmox-config/config.yaml
+    command: python -m proxmox_mcp.server --http --port 8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-s", "--max-time", "3", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

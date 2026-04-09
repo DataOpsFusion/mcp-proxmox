@@ -1,0 +1,23 @@
+stages:
+  - build
+
+variables:
+  HARBOR_REGISTRY: harbor.homeserverlocal.com
+  IMAGE_NAME: $HARBOR_REGISTRY/proxmox/proxmox
+  DOCKER_TLS_CERTDIR: ""
+
+build:
+  stage: build
+  image: docker:24
+  services:
+    - docker:24-dind
+  before_script:
+    - docker login -u "$HARBOR_USER" -p "$HARBOR_PASSWORD" $HARBOR_REGISTRY
+  script:
+    - docker build -t $IMAGE_NAME:$CI_COMMIT_SHORT_SHA -t $IMAGE_NAME:latest .
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:latest
+  only:
+    - main
+    - develop
+

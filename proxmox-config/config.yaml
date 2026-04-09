@@ -1,0 +1,50 @@
+# ProxmoxMCP-Plus Configuration
+server:
+  port: 8080
+  host: 0.0.0.0
+
+hosts:
+  - name: homeserver
+    host: 192.168.0.100
+    port: 8006
+    verify_ssl: false
+    service: PVE
+    auth:
+      user: mcp@pam
+      token_name: mcp
+      token_value: d1b82b19-9af2-4bf9-8982-25d41801ae2b
+
+  - name: lab-cloud
+    host: 192.168.0.96
+    port: 8006
+    verify_ssl: false
+    service: PVE
+    auth:
+      user: mcp@pam
+      token_name: mcp
+      token_value: d1b82b19-9af2-4bf9-8982-25d41801ae2b
+
+  - name: officeserver
+    host: 192.168.0.98
+    port: 8006
+    verify_ssl: false
+    service: PVE
+    auth:
+      user: mcp@pam
+      token_name: mcp
+      token_value: d1b82b19-9af2-4bf9-8982-25d41801ae2b
+
+  - name: workload-node
+    host: 192.168.0.95
+    port: 8006
+    verify_ssl: false
+    service: PVE
+    auth:
+      user: mcp@pam
+      token_name: mcp
+      token_value: d1b82b19-9af2-4bf9-8982-25d41801ae2b
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: proxmox_mcp.log

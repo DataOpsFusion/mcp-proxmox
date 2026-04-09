@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.*
+!.env.example
+hosts.yaml
+known_hosts
+*.pem
+*.key
+
+# Docker local overrides
+docker-compose.override.yml
+docker-compose.yml.bak*
+
+# Terraform binary & state
+terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Lock files
+uv.lock
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.log
+logs/
+
