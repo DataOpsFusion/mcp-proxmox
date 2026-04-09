@@ -50,5 +50,4 @@ build:
     - docker push $IMAGE_NAME:latest
   only:
     - main
-    - develop
 
