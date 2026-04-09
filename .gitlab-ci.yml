@@ -1,9 +1,41 @@
 stages:
+  - lint
+  - test
   - build
 
 variables:
   DOCKER_TLS_CERTDIR: ""
   IMAGE_NAME: $HARBOR_HOST/$HARBOR_PROJECT/$CI_PROJECT_NAME
+
+lint:
+  stage: lint
+  image: python:3.12-slim
+  before_script:
+    - pip install ruff --quiet
+  script:
+    - ruff check . --output-format=github
+  only:
+    - main
+    - develop
+    - merge_requests
+
+test:
+  stage: test
+  image: python:3.12-slim
+  before_script:
+    - pip install -r requirements.txt --quiet
+    - pip install pytest --quiet
+  script:
+    - |
+      if [ -d tests ]; then
+        pytest tests/ -v
+      else
+        echo "No tests directory — skipping"
+      fi
+  only:
+    - main
+    - develop
+    - merge_requests
 
 build:
   stage: build
